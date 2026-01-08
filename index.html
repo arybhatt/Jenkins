@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research Laboratory</title>
+    <title>Welcome to Bangalore CTS</title>
     <style>
         * {
             margin: 0;
@@ -12,8 +12,8 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -22,232 +22,268 @@
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 900px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.95);
+            background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            padding: 60px;
-            animation: fadeIn 0.8s ease-in;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+            animation: slideIn 0.8s ease-out;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        header {
+        .header {
+            background: linear-gradient(135deg, #0066cc, #004999);
+            padding: 60px 40px;
             text-align: center;
-            margin-bottom: 50px;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 30px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
         
         h1 {
             font-size: 3em;
-            color: #333;
-            margin-bottom: 15px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
         
         .subtitle {
             font-size: 1.3em;
-            color: #666;
-            font-weight: 300;
+            position: relative;
+            z-index: 1;
+            opacity: 0.95;
         }
         
-        .section {
-            margin-bottom: 40px;
+        .image-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #f0f0f0, #e0e0e0);
         }
         
-        .section h2 {
-            font-size: 2em;
-            color: #667eea;
-            margin-bottom: 20px;
+        .building-illustration {
+            width: 100%;
+            height: 100%;
             display: flex;
-            align-items: center;
-            gap: 15px;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 40px;
+            background: linear-gradient(to bottom, #87CEEB 0%, #87CEEB 60%, #90EE90 60%, #90EE90 100%);
+            position: relative;
         }
         
-        .icon {
-            width: 40px;
+        .sun {
+            position: absolute;
+            top: 50px;
+            right: 80px;
+            width: 80px;
+            height: 80px;
+            background: #FFD700;
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+            animation: glow 3s ease-in-out infinite;
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.6); }
+            50% { box-shadow: 0 0 50px rgba(255, 215, 0, 0.9); }
+        }
+        
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50px;
+            opacity: 0.8;
+        }
+        
+        .cloud1 {
+            width: 100px;
             height: 40px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 10px;
+            top: 80px;
+            left: 100px;
+            animation: float 15s ease-in-out infinite;
+        }
+        
+        .cloud2 {
+            width: 80px;
+            height: 35px;
+            top: 120px;
+            right: 120px;
+            animation: float 12s ease-in-out infinite reverse;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(30px); }
+        }
+        
+        .building {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+        
+        .tower {
+            background: linear-gradient(to bottom, #2c5282, #1a365d);
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+        
+        .main-tower {
+            width: 180px;
+            height: 280px;
+            background: linear-gradient(135deg, #0066cc, #004999);
+        }
+        
+        .side-tower {
+            width: 120px;
+            height: 220px;
+        }
+        
+        .window {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .main-tower .window {
+            width: 25px;
+            height: 35px;
+        }
+        
+        .side-tower .window {
+            width: 20px;
+            height: 30px;
+        }
+        
+        .logo-area {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 60px;
+            background: rgba(0, 102, 204, 0.9);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.2em;
+            font-weight: bold;
+            font-size: 1.5em;
+            border-radius: 5px;
         }
         
-        .content {
-            color: #555;
-            line-height: 1.8;
-            font-size: 1.1em;
-        }
-        
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-        }
-        
-        .card {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 30px;
-            border-radius: 15px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
-        }
-        
-        .card h3 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 1.4em;
-        }
-        
-        .card p {
+        .footer {
+            padding: 40px;
+            text-align: center;
+            background: #f8f9fa;
             color: #666;
+        }
+        
+        .footer p {
+            font-size: 1.1em;
             line-height: 1.6;
         }
         
-        .status {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: #4caf50;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-        
-        .pulse {
-            width: 12px;
-            height: 12px;
-            background: white;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.2); }
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 50px;
-            padding-top: 30px;
-            border-top: 2px solid #eee;
-            color: #999;
-        }
-        
-        .btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 15px 35px;
-            border-radius: 30px;
-            text-decoration: none;
-            margin: 10px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            font-weight: bold;
-        }
-        
-        .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
-        }
-        
         @media (max-width: 768px) {
-            .container {
-                padding: 30px;
-            }
             h1 {
                 font-size: 2em;
             }
-            .grid {
-                grid-template-columns: 1fr;
+            .header {
+                padding: 40px 20px;
+            }
+            .building {
+                transform: scale(0.8);
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>🔬 Research Laboratory</h1>
-            <p class="subtitle">Advancing Science Through Innovation</p>
-            <div class="status">
-                <span class="pulse"></span>
-                Server Online
-            </div>
-        </header>
+        <div class="header">
+            <h1>Welcome to Bangalore CTS</h1>
+            <p class="subtitle">Cognizant Technology Solutions</p>
+        </div>
         
-        <div class="section">
-            <h2><span class="icon">📊</span>About Our Lab</h2>
-            <div class="content">
-                <p>Welcome to our state-of-the-art research facility dedicated to cutting-edge scientific discovery and technological innovation. Our team of researchers and engineers work collaboratively to push the boundaries of knowledge in various fields.</p>
+        <div class="image-container">
+            <div class="building-illustration">
+                <div class="sun"></div>
+                <div class="cloud cloud1"></div>
+                <div class="cloud cloud2"></div>
+                
+                <div class="building">
+                    <div class="tower side-tower">
+                        <div class="window" style="top: 20px; left: 20px;"></div>
+                        <div class="window" style="top: 20px; right: 20px;"></div>
+                        <div class="window" style="top: 70px; left: 20px;"></div>
+                        <div class="window" style="top: 70px; right: 20px;"></div>
+                        <div class="window" style="top: 120px; left: 20px;"></div>
+                        <div class="window" style="top: 120px; right: 20px;"></div>
+                        <div class="window" style="top: 170px; left: 20px;"></div>
+                        <div class="window" style="top: 170px; right: 20px;"></div>
+                    </div>
+                    
+                    <div class="tower main-tower">
+                        <div class="logo-area">CTS</div>
+                        <div class="window" style="top: 110px; left: 25px;"></div>
+                        <div class="window" style="top: 110px; left: 70px;"></div>
+                        <div class="window" style="top: 110px; right: 25px;"></div>
+                        <div class="window" style="top: 160px; left: 25px;"></div>
+                        <div class="window" style="top: 160px; left: 70px;"></div>
+                        <div class="window" style="top: 160px; right: 25px;"></div>
+                        <div class="window" style="top: 210px; left: 25px;"></div>
+                        <div class="window" style="top: 210px; left: 70px;"></div>
+                        <div class="window" style="top: 210px; right: 25px;"></div>
+                    </div>
+                    
+                    <div class="tower side-tower">
+                        <div class="window" style="top: 20px; left: 20px;"></div>
+                        <div class="window" style="top: 20px; right: 20px;"></div>
+                        <div class="window" style="top: 70px; left: 20px;"></div>
+                        <div class="window" style="top: 70px; right: 20px;"></div>
+                        <div class="window" style="top: 120px; left: 20px;"></div>
+                        <div class="window" style="top: 120px; right: 20px;"></div>
+                        <div class="window" style="top: 170px; left: 20px;"></div>
+                        <div class="window" style="top: 170px; right: 20px;"></div>
+                    </div>
+                </div>
             </div>
         </div>
         
-        <div class="section">
-            <h2><span class="icon">🎯</span>Research Areas</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>🧬 Biotechnology</h3>
-                    <p>Exploring genetic engineering, molecular biology, and biomedical applications for improving human health.</p>
-                </div>
-                <div class="card">
-                    <h3>🤖 Artificial Intelligence</h3>
-                    <p>Developing machine learning algorithms and neural networks for advanced data analysis and automation.</p>
-                </div>
-                <div class="card">
-                    <h3>⚡ Energy Systems</h3>
-                    <p>Researching sustainable energy solutions and renewable resource technologies for a greener future.</p>
-                </div>
-                <div class="card">
-                    <h3>🔭 Materials Science</h3>
-                    <p>Discovering new materials with unique properties for applications in aerospace, electronics, and more.</p>
-                </div>
-            </div>
+        <div class="footer">
+            <p><strong>Innovation • Excellence • Technology</strong></p>
+            <p style="margin-top: 15px;">Empowering businesses with digital transformation</p>
         </div>
-        
-        <div class="section">
-            <h2><span class="icon">👥</span>Join Our Team</h2>
-            <div class="content">
-                <p>We're always looking for talented researchers, graduate students, and collaborators who share our passion for scientific excellence. Contact us to learn about current opportunities.</p>
-                <div style="text-align: center; margin-top: 30px;">
-                    <a href="#" class="btn">Contact Us</a>
-                    <a href="#" class="btn">Publications</a>
-                </div>
-            </div>
-        </div>
-        
-        <footer>
-            <p>&copy; 2026 Research Laboratory. All rights reserved.</p>
-            <p style="margin-top: 10px; font-size: 0.9em;">Server Time: <span id="time"></span></p>
-        </footer>
     </div>
-    
-    <script>
-        function updateTime() {
-            const now = new Date();
-            document.getElementById('time').textContent = now.toLocaleString();
-        }
-        updateTime();
-        setInterval(updateTime, 1000);
-    </script>
 </body>
 </html>
