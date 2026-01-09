@@ -1,0 +1,28 @@
+jenkins:
+  systemMessage: "Managed by JCasC - Manual changes will be overwritten."
+  numExecutors: 2
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "dave"
+          password: "12345"
+
+# This is where the magic happens: JCasC creates a 'Seed Job'
+jobs:
+  - script: >
+      pipelineJob('Generated-Pipeline') {
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url('https://github.com/your-user/your-repo.git')
+                }
+                branches('main')
+              }
+            }
+            scriptPath('Jenkinsfile') # Tells Jenkins to look for the Jenkinsfile
+          }
+        }
+      }
