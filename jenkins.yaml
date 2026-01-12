@@ -5,8 +5,8 @@ jenkins:
     local:
       allowsSignup: false
       users:
-        - id: "dave"
-          password: "12345"
+        - id: "admin"
+          password: "admin"
 
 # This is where the magic happens: JCasC creates a 'Seed Job'
 jobs:
