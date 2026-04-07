@@ -20,6 +20,12 @@ pipeline {
                  echo 'smoking'
            } 
         }
+       
+       stage('Info') {
+             steps {
+             echo 'Triggered via Jenkinsfile change'
+          }
+        }
 
         stage('Test') {
             steps {
