@@ -1,41 +1,50 @@
 pipeline {
     agent any
 
+    environment {
+        IMAGE_NAME = "my-hello-world-app"
+        CONTAINER_NAME = "web-container"
+        PORT = "3000"
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                // This pulls code from the repo configured in the job
                 checkout scm
             }
         }
-        stage('Build') {
+
+        stage('Cleanup Old Container') {
             steps {
-                echo 'Building the application...'
-                // For a Java app, you'd use: sh './mvnw clean package'
+                script {
+                    // This ensures we don't hit a snag if a container is already running
+                    sh "docker rm -f ${CONTAINER_NAME} || true"
+                }
             }
         }
-        stage('Test') {
+
+        stage('Build Docker Image') {
             steps {
-                echo 'Running unit tests...'
-                // For a Node app, you'd use: sh 'npm test'
+                echo 'Building the Docker image...'
+                sh "docker build -t ${IMAGE_NAME} ."
             }
         }
-        stage('Deploy') {
+
+        stage('Run Container') {
             steps {
-                echo 'Deploying to EC2 Instance...'
+                echo "Deploying to port ${PORT}..."
+                // Runs the container in detached mode (-d)
+                sh "docker run -d --name ${CONTAINER_NAME} -p ${PORT}:3000 ${IMAGE_NAME}"
             }
         }
     }
-    
+
     post {
-        always {
-            echo 'Cleaning up the workspace...'
-        }
         success {
-            echo 'Build was successful! High fives all around.'
+            echo "Successfully deployed! Visit http://your-ec2-ip:${PORT}"
         }
         failure {
-            echo 'Build failed. Back to the drawing board!'
+            echo "Something went sideways. Check the Jenkins console output."
         }
     }
 }
