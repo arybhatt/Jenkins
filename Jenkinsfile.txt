@@ -1,0 +1,66 @@
+pipeline {
+    agent any 
+
+    options {
+        // Keeps only the last 10 builds to save disk space
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+        // Stops the build if it takes longer than 30 minutes
+        timeout(time: 30, unit: 'MINUTES')
+        // Adds timestamps to the console output
+        timestamps()
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Pulling code from the repository...'
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Compiling the application...'
+                // Example for a Java project; use 'npm install' for Node.js
+                sh './gradlew clean build' 
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running unit tests...'
+                sh './gradlew test'
+            }
+            post {
+                always {
+                    // Collects test results even if the tests fail
+                    junit '**/build/test-results/**/*.xml'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            // This stage only runs if the user manually approves it
+            input {
+                message "Should we proceed to production?"
+                ok "Yes, deploy!"
+            }
+            steps {
+                echo 'Deploying to the production server...'
+                sh './deploy.sh'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'The pipeline finished successfully! Everything is coming up roses.'
+        }
+        failure {
+            echo 'The pipeline failed. We need to go back to the drawing board.'
+            mail to: 'team@example.com',
+                 subject: "Failed Pipeline: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                 body: "Check the logs at ${env.BUILD_URL}"
+        }
+    }
+}
