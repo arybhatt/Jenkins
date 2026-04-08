@@ -14,7 +14,7 @@ pipeline {
             }
         }
 
-        stage ('webhook setup') {
+        stage ('Yourwebhook setup') {
 
             steps {
                  echo 'smoking'
