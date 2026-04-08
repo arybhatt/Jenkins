@@ -14,10 +14,10 @@ pipeline {
             }
         }
 
-        stage ('webhook setup') {
+        stage ('No Smoking setup') {
 
             steps {
-                 echo 'No Please Smoking'
+                 echo 'GO for Please Smoking'
            } 
         }
        
