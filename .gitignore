@@ -1,3 +1,5 @@
 appspec.yml
 deploy.yml
 index.html
+Dockerfile
+Jenkinsfile.txt
