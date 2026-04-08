@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // This pulls code from the repo configured in the job
+                checkout scm
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building the application...'
+                // For a Java app, you'd use: sh './mvnw clean package'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Running unit tests...'
+                // For a Node app, you'd use: sh 'npm test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying to EC2 Instance...'
+            }
+        }
+    }
+    
+    post {
+        always {
+            echo 'Cleaning up the workspace...'
+        }
+        success {
+            echo 'Build was successful! High fives all around.'
+        }
+        failure {
+            echo 'Build failed. Back to the drawing board!'
+        }
+    }
+}

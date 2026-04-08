@@ -1,0 +1,31 @@
+node {
+    try {
+        stage('Checkout') {
+            checkout scm
+        }
+        
+        stage('Build') {
+            echo 'Executing Build phase...'
+            // Example shell command
+            sh 'uptime' 
+        }
+        
+        stage('Test') {
+            if (env.BRANCH_NAME == 'master') {
+                echo 'Running heavy tests on master branch...'
+            } else {
+                echo 'Running quick tests...'
+            }
+        }
+        
+        stage('Deploy') {
+            echo 'Deploying application...'
+        }
+        
+    } catch (exc) {
+        echo "Something went sideways: ${exc}"
+        throw exc
+    } finally {
+        echo 'Finished processing pipeline.'
+    }
+}
