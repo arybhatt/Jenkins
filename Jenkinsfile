@@ -14,7 +14,7 @@ pipeline {
             }
         }
 
-        stage ('smoke test') {
+        stage ('webhook setup') {
 
             steps {
                  echo 'smoking'
