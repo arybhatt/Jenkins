@@ -1,42 +1,39 @@
 pipeline {
     agent any
+    
+    environment {
+        APP_NAME = "my-web-app"
+    }
 
     stages {
-        stage('Clone') {
+        stage('Checkout') {
             steps {
-                echo 'Cloning from GitHub...'
+                checkout scm
             }
         }
 
-        stage('Build') {
+        stage('Build Image') {
             steps {
-                echo 'Building application...'
+                echo "Building Docker Image..."
+                sh "docker build -t ${APP_NAME}:${BUILD_NUMBER} ."
+                sh "docker tag ${APP_NAME}:${BUILD_NUMBER} ${APP_NAME}:latest"
             }
         }
 
-        stage ('No Smoking setup') {
-
+        stage('Deploy Container') {
             steps {
-                 echo 'GO for Please Smoking'
-           } 
-        }
-       
-       stage('Info') {
-             steps {
-             echo 'Triggered via Jenkinsfile change'
-          }
-        }
-
-        stage('Test') {
-            steps {
-                echo 'Running tests...'
+                echo "Deploying Container..."
+                // Remove old container if it exists to avoid port conflicts
+                sh "docker rm -f ${APP_NAME}-container || true"
+                // Run the new one on Port 80
+                sh "docker run -d --name ${APP_NAME}-container -p 80:80 ${APP_NAME}:latest"
             }
         }
+    }
 
-        stage('Deploy') {
-            steps {
-                echo 'Deploying application...'
-            }
+    post {
+        success {
+            echo "Pipeline finished! Check your EC2 Public IP on Port 80."
         }
     }
 }
