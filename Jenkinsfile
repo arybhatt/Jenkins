@@ -17,7 +17,7 @@ pipeline {
         stage ('webhook setup') {
 
             steps {
-                 echo 'Daily Smoking'
+                 echo 'No Please Smoking'
            } 
         }
        
