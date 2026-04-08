@@ -1,4 +1,18 @@
+# Use the lightweight Alpine version of Nginx
 FROM nginx:alpine
-# Copy our html file to the default nginx path
+
+# Metadata (Optional but good practice)
+LABEL maintainer="trainer@skillifi.ai"
+
+# Remove the default Nginx static assets
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copy your index.html from your repo to the Nginx html folder
+# This is where Nginx looks for files to serve by default
 COPY index.html /usr/share/nginx/html/index.html
+
+# Expose port 80 to the outside world
 EXPOSE 80
+
+# Start Nginx and keep it running in the foreground
+CMD ["nginx", "-g", "daemon off;"]
