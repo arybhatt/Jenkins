@@ -5,19 +5,18 @@ pipeline {
         IMAGE_NAME = "my-hello-world-app"
         CONTAINER_NAME = "web-container"
         PORT = "3000"
+        // Pointing specifically to your filename in the repo
+        DOCKERFILE_PATH = "Dockerfile.txt" 
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
+        // Removed the manual 'Checkout' stage as Jenkins does this automatically
 
         stage('Cleanup Old Container') {
             steps {
                 script {
-                    // This ensures we don't hit a snag if a container is already running
+                    echo 'Cleaning up existing containers...'
+                    // || true ensures the pipeline doesn't fail if the container doesn't exist yet
                     sh "docker rm -f ${CONTAINER_NAME} || true"
                 }
             }
@@ -26,14 +25,15 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo 'Building the Docker image...'
-                sh "docker build -t ${IMAGE_NAME} ."
+                // Using -f to specify your Dockerfile.txt
+                sh "docker build -f ${DOCKERFILE_PATH} -t ${IMAGE_NAME} ."
             }
         }
 
         stage('Run Container') {
             steps {
                 echo "Deploying to port ${PORT}..."
-                // Runs the container in detached mode (-d)
+                // -d runs it in the background
                 sh "docker run -d --name ${CONTAINER_NAME} -p ${PORT}:3000 ${IMAGE_NAME}"
             }
         }
@@ -41,10 +41,14 @@ pipeline {
 
     post {
         success {
-            echo "Successfully deployed! Visit http://your-ec2-ip:${PORT}"
+            echo "Successfully deployed! Your app is now live."
+            echo "Visit http://your-server-ip:${PORT}"
         }
         failure {
-            echo "Something went sideways. Check the Jenkins console output."
+            echo "The build was dead in the water. Check the console output above for errors."
+        }
+        always {
+            echo "Pipeline execution finished."
         }
     }
 }
