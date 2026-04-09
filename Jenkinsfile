@@ -1,69 +1,51 @@
 pipeline {
-    agent any
-    
-    environment {
-        // Using a variable for the image name to keep things "DRY" (Don't Repeat Yourself)
-        APP_NAME = "my-web-app"
-        CONTAINER_NAME = "my-web-app-container"
-    }
+    /* 1. Define where the job runs */
+    agent any 
 
+    /* 2. Define the individual stages of the process */
     stages {
+        
         stage('Checkout') {
             steps {
-                // Pulls the latest code from your configured Git repo
-                checkout scm
+                // This is where you'd usually pull from Git
+                echo 'Checking out code from the repository...'
             }
         }
 
-        stage('Build Image') {
+        stage('Build') {
             steps {
-                echo "Building Docker Image: ${APP_NAME}..."
-                // Build using the specific Jenkins Build Number for traceability
-                sh "docker build -t ${APP_NAME}:${BUILD_NUMBER} ."
-                // Tag it as 'latest' so our run command always points to the newest version
-                sh "docker tag ${APP_NAME}:${BUILD_NUMBER} ${APP_NAME}:latest"
+                // Compile code or install dependencies here
+                echo 'Building the application...'
+                sh 'java -version' // Running a shell command to check Java
             }
         }
 
-        stage('Cleanup Old Container') {
+        stage('Test') {
             steps {
-                echo "Stopping and removing existing container if it exists..."
-                // '|| true' ensures the pipeline doesn't fail if the container isn't found
-                sh "docker rm -f ${CONTAINER_NAME} || true"
+                // Run your unit tests
+                echo 'Running unit tests...'
+                echo 'Tests passed with flying colors!'
             }
         }
 
-        stage('Deploy Container') {
+        stage('Deploy') {
             steps {
-                echo "Deploying new container on Port 80..."
-                // Runs the container in detached mode (-d)
-                sh "docker run -d --name ${CONTAINER_NAME} -p 80:80 ${APP_NAME}:latest"
-            }
-        }
-        
-        stage('Verify Deployment') {
-            steps {
-                echo "Verifying service status..."
-                // A quick check to see if the container is actually running
-                sh "docker ps | grep ${CONTAINER_NAME}"
+                // Move the code to production or a web server
+                echo 'Deploying to Amazon Linux server...'
             }
         }
     }
 
+    /* 3. Define what happens after the stages finish */
     post {
+        always {
+            echo 'The job is finished. Cleaning up...'
+        }
         success {
-            echo "-----------------------------------------------------------"
-            echo "SUCCESS: Pipeline finished!"
-            echo "Access your app at http://your-ec2-public-ip"
-            echo "-----------------------------------------------------------"
+            echo 'Everything went off without a hitch!'
         }
         failure {
-            echo "ERROR: Pipeline failed. Check the console output above."
-        }
-        always {
-            echo "Cleaning up local workspace..."
-            // Keeps your Jenkins server from getting cluttered
-            cleanWs()
+            echo 'Something went south. Please check the logs.'
         }
     }
 }

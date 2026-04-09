@@ -3,3 +3,6 @@ deploy.yml
 index.html
 Dockerfile
 Jenkinsfile.txt
+Jenkins
+Declarative.txt
+scripted.txt
