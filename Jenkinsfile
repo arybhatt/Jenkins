@@ -31,7 +31,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 // Move the code to production or a web server
-                echo 'Deploying to Amazon Linux server...'
+                echo 'Deploying to Amazon Linux server in KOLKATA...'
             }
         }
     }
