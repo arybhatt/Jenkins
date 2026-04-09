@@ -24,7 +24,7 @@ pipeline {
             steps {
                 // Run your unit tests
                 echo 'Running unit tests...'
-                echo 'Tests passed with flying colors!'
+                echo 'Shayam is going PUNE SOON"
             }
         }
 
