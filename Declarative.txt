@@ -48,7 +48,7 @@ pipeline {
             echo "The build was dead in the water. Check the console output above for errors."
         }
         always {
-            echo "Jatt da muqabala das mainu"
+            echo "Jatt da"
         }
     }
 }
