@@ -14,7 +14,7 @@ node {
             if (env.BRANCH_NAME == 'master') {
                 echo 'Running heavy tests on master branch...'
             } else {
-                echo 'Running quick tests...'
+                echo 'Running quick tests from scripted'
             }
         }
         
