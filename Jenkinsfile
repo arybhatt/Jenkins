@@ -45,7 +45,7 @@ pipeline {
             echo 'Everything went off without a hitch!'
         }
         failure {
-            echo 'Something went south. Please check the logs.'
+            echo 'Something went south. Please check the logs not today.'
         }
     }
 }
