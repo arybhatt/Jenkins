@@ -8,7 +8,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // This is where you'd usually pull from Git
-                echo 'Checking out code from the son repository...'
+                echo 'Checking out code from the JOhn repository...'
             }
         }
 
